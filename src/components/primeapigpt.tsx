@@ -9,9 +9,10 @@ interface ModelProps {
     llm_model: string;
     codeSample: boolean;
     language: string;
+    conversationalMemOn: boolean;
 }
 
-const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language}) => {
+const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language, conversationalMemOn}) => {
     const [query, setQuery] = useState('');
     const [response, setResponse] = useState('Your response will appear here...');
     const [loading, setLoading] = useState(false);
@@ -38,7 +39,8 @@ const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language}) =>
                 model: llm_model,
                 pipeline: "standard:memory",
                 codeSample: codeSample,
-                language: language
+                language: language,
+                conversationalMemOn: conversationalMemOn
             }),
         })
             .then(response => response.json())

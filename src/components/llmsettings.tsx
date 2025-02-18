@@ -13,9 +13,11 @@ interface LLMSelectorProps {
   setLanguage: Dispatch<SetStateAction<string>>;
   showDebug: boolean;
   setShowDebug: Dispatch<SetStateAction<boolean>>;
+  conversationalMemOn: boolean;
+  setConversationalMemOn: Dispatch<SetStateAction<boolean>>;
 }
 
-const LLMSelector: React.FC<LLMSelectorProps> = ({ model, setModel, codeSample, setCodeSample, language, setLanguage, showDebug, setShowDebug }) => {
+const LLMSelector: React.FC<LLMSelectorProps> = ({ model, setModel, codeSample, setCodeSample, language, setLanguage, showDebug, setShowDebug, conversationalMemOn, setConversationalMemOn }) => {
 //   const [model, setModel] = useState("llama3");
 //   const [codeSample, setCodeSample] = useState(false);
 //   const [language, setLanguage] = useState("python");
@@ -60,6 +62,15 @@ const LLMSelector: React.FC<LLMSelectorProps> = ({ model, setModel, codeSample, 
             <SelectItem value="Java">Java</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Checkbox 
+          id="conversational-mem-on" 
+          checked={conversationalMemOn} 
+          onCheckedChange={(checked) => setConversationalMemOn(checked as boolean)} 
+        />
+        <label htmlFor="converational-mem-on" className="text-sm">Conversational Memory</label>
       </div>
 
       {/* Debug Log Toggle */}
