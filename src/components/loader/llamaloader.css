@@ -1,0 +1,29 @@
+@keyframes walk {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(30px); }
+    100% { transform: translateX(0); }
+  }
+  
+  @keyframes tailWag {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(10deg); }
+  }
+  
+  .llama-loader {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .llama {
+    animation: walk 1s infinite ease-in-out;
+  }
+  
+  .llama-tail {
+    animation: tailWag 0.5s infinite ease-in-out;
+    transform-origin: right center;
+  }
+  
