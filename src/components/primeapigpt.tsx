@@ -9,10 +9,9 @@ interface ModelProps {
     llm_model: string;
     codeSample: boolean;
     language: string;
-    conversationalMemOn: boolean;
 }
 
-const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language, conversationalMemOn}) => {
+const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language}) => {
     const [query, setQuery] = useState('');
     const [response, setResponse] = useState('Your response will appear here...');
     const [loading, setLoading] = useState(false);
@@ -20,6 +19,24 @@ const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language, con
     const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
     };
+
+    const handleNewChat = () => {
+        setQuery('');
+        setResponse('');
+
+        fetch('http://localhost:3000/clearMemory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(() => setLoading(false))
+            .catch(error => {
+                console.error('Error:', error);
+                setResponse('An error occurred while fetching the response');
+                setLoading(false);
+            });
+    }
 
     const handleQuerySubmit = () => {
         // Simulate an API call
@@ -40,7 +57,7 @@ const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language, con
                 pipeline: "standard:memory",
                 codeSample: codeSample,
                 language: language,
-                conversationalMemOn: conversationalMemOn
+                conversationalMemOn: true
             }),
         })
             .then(response => response.json())
@@ -55,11 +72,7 @@ const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language, con
             });
     };
 
-    const handleCopyResponse = () => {
-        navigator.clipboard.writeText(response);
-        alert('Response copied to clipboard!');
-    };
-
+    
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '90vh', padding: '20px' }}>
             
@@ -88,12 +101,19 @@ const PrimeApiGpt: React.FC<ModelProps> = ({llm_model, codeSample, language, con
           Submit
           <Send className="h-4 w-4 ml-2 animate-bounce" />
         </>
+
+        
       )}
     </Button>
 
-                <button onClick={handleCopyResponse} style={{ padding: '10px 20px' }}>Copy</button>
-            </div>
-        </div>
+
+    <Button onClick={handleNewChat} variant="outline" className="ml-2 flex items-center justify-center gap-2 rounded-full p-4 hover:bg-gray-100">
+        New Chat
+    </Button>
+                
+    </div>
+    </div>
+                
     );
 };
 

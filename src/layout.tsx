@@ -10,7 +10,7 @@ export default function Layout() {
   const [codeSample, setCodeSample] = useState(true);
   const [language, setLanguage] = useState("JavaScript");
   const [showDebug, setShowDebug] = useState(false);
-  const [conversationalMemOn, setConversationalMemOn] = useState(false);
+  
 
   return (
     
@@ -22,7 +22,7 @@ export default function Layout() {
         codeSample={codeSample} setCodeSample={setCodeSample}
         language={language} setLanguage={setLanguage}
         showDebug={showDebug} setShowDebug={setShowDebug}
-        conversationalMemOn={conversationalMemOn} setConversationalMemOn={setConversationalMemOn}></LLMSelector>
+        ></LLMSelector>
         
         </tr>
       </table>
@@ -30,7 +30,7 @@ export default function Layout() {
       <table style={{width: '100%'}}>
         <tr>
         <td style={{width: '60%', overflowY: 'auto'}}>
-          <PrimeApiGpt  llm_model={model} codeSample={codeSample} language={language} conversationalMemOn={conversationalMemOn} />
+          <PrimeApiGpt  llm_model={model} codeSample={codeSample} language={language}/>
         </td>
 
         {showDebug &&  <td style={{width: '40%', overflowY: 'auto'}}>
